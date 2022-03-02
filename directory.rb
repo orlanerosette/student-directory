@@ -19,7 +19,25 @@ def input_students
     return students
   end
 
-  
+
+#  create a method to print a number before the name of each student
+def print_students_with_index(students)
+  students.each_with_index do |student, index|
+    puts "#{index+1}. #{student[:name]} (#{student[:cohort]} cohort)"  
+  end
+end
+
+# create a method to print students whose name starts with the letter p
+def print_students_beginning_with_p(students)
+  puts "students with names beginning with 'P': "
+  puts "----------------"  
+  students.select do |student|
+    if student[:name].downcase.start_with?("p") 
+      puts "#{student[:name].capitalize} (#{student[:cohort]} cohort)"
+    end
+  end
+end
+
 # created print header method
 def print_header
   puts "The students of Villains Academy"
@@ -42,5 +60,5 @@ end
 # calling the methods
 students = input_students
 print_header
-print_students(students)
+print_students_beginning_with_p(students)
 print_footer(students)
