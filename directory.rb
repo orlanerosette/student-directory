@@ -19,32 +19,33 @@ students_array = [
 
 # created input students method
 def input_students
-    puts "To finish, just hit return five times"
+    puts "To finish, just hit return twice"
     # create an empty array
     # students = []
     # get the first name
     print "Enter student name: "
-    name = gets.strip
+    name = STDIN.gets.strip
     # get the cohort name
-    print "Enter cohort name: "
-    cohort = gets.strip
-    # get hobbies
-    print "Enter student hobby/hobbies: "
-    hobby = gets.chomp
-    # get current location
-    print "Enter country of current residence: "
-    residence = gets.chomp
-    # height
-    print "Enter height: "
-    height = gets.chomp
+    # print "Enter cohort name: "
+    # cohort = STDIN.gets.strip
+    # # get hobbies
+    # print "Enter student hobby/hobbies: "
+    # hobby = STDIN.gets.chomp
+    # # get current location
+    # print "Enter country of current residence: "
+    # residence = STDIN.gets.chomp
+    # # height
+    # print "Enter height: "
+    # height = STDIN.gets.chomp
     # while the name is not empty, repeat this code
     while !name.empty? do
       # add the student hash to the array
       @students << {name: name, 
-                    cohort: cohort, 
-                    hobbies: hobby, 
-                    residence: residence,
-                    height: height}
+                    cohort: :march, 
+                    # hobbies: hobby, 
+          					# residence: residence,
+                    # height: height
+									}
       if @students.count == 1
         puts "Now we have #{@students.count} student"
       else             
@@ -52,19 +53,19 @@ def input_students
       end
       # get info from the user for other student
       print "Enter student name: "
-      name = gets.chomp
+      name = STDIN.gets.chomp
       # get the cohort name
-      print "Enter cohort name: "
-      cohort = gets.chomp
-      # get hobbies
-      print "Enter student hobby/hobbies: "
-      hobby = gets.chomp
-      # get current location
-      print "Enter country of current residence: "
-      residence = gets.chomp
-      # height
-      print "Enter height: "
-      height = gets.chomp
+      # print "Enter cohort name: "
+      # cohort = STDIN.gets.chomp
+      # # get hobbies
+      # print "Enter student hobby/hobbies: "
+      # hobby = STDIN.gets.chomp
+      # # get current location
+      # print "Enter country of current residence: "
+      # residence = STDIN.gets.chomp
+      # # height
+      # print "Enter height: "
+      # height = STDIN.gets.chomp
     end
     # return the array of students
       return @students
@@ -189,8 +190,8 @@ end
 		puts "The students have been saved into file."
 	end
 
-	def load_students
-		file = File.open("students.csv", "r")
+	def load_students(filename="students.csv")
+		file = File.open(filename, "r")
 		file.readlines.each { |line|
 			name, cohort = line.chomp.split(",")
 			@students << {name: name, cohort: cohort.to_sym}
@@ -199,12 +200,27 @@ end
 		puts "The file was successfully loaded."
 	end
 
+
+	def try_load_students
+		# filename is the first argument from the command line
+		filename = ARGV.first
+		return if filename.nil?
+		# if true, exit the method
+		if File.exists?(filename)
+			load_students(filename)
+			puts "Loaded #{@students.count} from #{filename}"
+		else
+			puts "Sorry, #{filename} doesn't exist."
+			exit
+		end
+	end
+
  # read the input and save it as a variable
  def process(selection)
     case selection
       when "1"
         # input students
-        @students = input_students
+        input_students
       when "2"
 				show_students
 			when "3"
