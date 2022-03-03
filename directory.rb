@@ -21,10 +21,10 @@ def input_students
     students = []
     # get the first name
     print "Enter student name: "
-    name = gets.chomp
+    name = gets.strip
     # get the cohort name
     print "Enter cohort name: "
-    cohort = gets.chomp
+    cohort = gets.strip
     # get hobbies
     print "Enter student hobby/hobbies: "
     hobby = gets.chomp
