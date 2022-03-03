@@ -1,3 +1,6 @@
+
+@students = []
+
 # created student array for testing
 students_array = [
   {name: "Dr. Hannibal Lecter", cohort: :november},
@@ -18,7 +21,7 @@ students_array = [
 def input_students
     puts "To finish, just hit return five times"
     # create an empty array
-    students = []
+    # students = []
     # get the first name
     print "Enter student name: "
     name = gets.strip
@@ -37,15 +40,15 @@ def input_students
     # while the name is not empty, repeat this code
     while !name.empty? do
       # add the student hash to the array
-      students << {name: name, 
+      @students << {name: name, 
                     cohort: cohort, 
                     hobbies: hobby, 
                     residence: residence,
                     height: height}
-      if students.count == 1
-        puts "Now we have #{students.count} student"
+      if @students.count == 1
+        puts "Now we have #{@students.count} student"
       else             
-        puts "Now we have #{students.count} students"
+        puts "Now we have #{@students.count} students"
       end
       # get info from the user for other student
       print "Enter student name: "
@@ -64,23 +67,25 @@ def input_students
       height = gets.chomp
     end
     # return the array of students
-      return students
+      return @students
   end
 
 
 #  create a method to print a number before the name of each student
 def print_students_with_index(students)
-  students.each_with_index do |student, index|
+	@students = students
+  @students.each_with_index do |student, index|
     puts "#{index+1}. #{student[:name]} (#{student[:cohort]} cohort)"  
   end
 end
 
 # create a method to print students whose name starts with the letter p
 def print_students_beginning_with_p(students)
+	@students = students
   puts "students with names beginning with 'P': "
   puts "----------------"  
   students_beginning_with_p = []
-  students.select do |student|
+  @students.select do |student|
     if student[:name].downcase.start_with?("p") 
       puts "#{student[:name].capitalize} (#{student[:cohort]} cohort)"
       students_beginning_with_p << student[:name]
@@ -91,10 +96,11 @@ end
 
 # create a method to print students whose names are shorter than 12 characters
 def print_students_less_than_12_char(students)
+	@students = students
   puts "students with names shorter than 12 characters"
   puts "----------------"
   students_shorter_12 = []
-  students.select do |student| 
+  @students.select do |student| 
     if student[:name].length < 12
       puts "#{student[:name].capitalize} (#{student[:cohort]} cohort)"
       students_shorter_12 << student[:name]
@@ -106,23 +112,25 @@ end
 
 # create a method printing students using a while or until loop
 def print_students_using_while(students)
-  counter = students.length
+	@students = students
+  counter = @students.length
   while counter > 0 do
-    puts students[counter-1][:name]
+    puts @students[counter-1][:name]
     counter -= 1
   end
 end
 
 # create a method that print students by cohort
 def print_students_by_cohort(students)
+	@students = students
   puts "students grouped by cohort"
   puts "----------------"
-  list_of_cohorts = students.map { |student| student[:cohort] }
+  list_of_cohorts = @students.map { |student| student[:cohort] }
   list_of_cohorts.sort.uniq.each do |cohort|
     puts " ".center(50)
     puts "#{cohort} cohort".upcase.center(50)
     puts "----------------".center(50)
-      students.each do |student|
+      @students.each do |student|
         puts student[:name].center(50) if student[:cohort] == cohort
       end
     end
@@ -138,8 +146,9 @@ end
 
 # created print names method
 def print_students(students)
-    if students.count > 0
-        students.each { |student| puts "#{student[:name]} (#{student[:cohort]} cohort)".center(50) }
+	@students = students
+    if @students.count > 0
+        @students.each { |student| puts "#{student[:name]} (#{student[:cohort]} cohort)".center(50) }
     else
       puts "There are no students."
     end
@@ -151,34 +160,42 @@ def print_footer(names)
   puts "Overall we have #{names.count} great students."
 end
 
+# print the menu and ask the user what to do
+def print_menu
+	puts "1. Input the students"
+	puts "2. Show the students"
+	puts "9. To exit"
+end
 
-# created interactive menu
-def interactive_menu
-  students = []
-  loop do
-    # print the menu and ask the user what to do
-    puts "1. Input the students"
-    puts "2. Show the students"
-    puts "9. To exit"
+ # show the students
+ def show_students
+	print_header
+	print_students(@students)
+	print_footer(@students)
+ end
 
-    # read the input and save it as a variable
-    selection = gets.chomp
+ # read the input and save it as a variable
+ def process(selection)
     case selection
       when "1"
         # input students
-        students = input_students
+        @students = input_students
       when "2"
-        # show the students
-        print_header
-        print_students(students)
-        print_footer(students)
+				show_students
       when "9"
         # this will terminate the program
         exit
       else
         puts "I don't know what you meant, try again"
     end
+	end
 
+
+# refactored interactive menu
+def interactive_menu
+  loop do
+    print_menu
+		process(gets.chomp)  
   end
 end
 
