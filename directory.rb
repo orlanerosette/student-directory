@@ -16,27 +16,30 @@ students_array = [
   {name: "Norman Bates", cohort: :may}
 ]
 
+def extra_data
+	# get the cohort name
+	print "Enter cohort name: "
+  cohort = STDIN.gets.strip
+	# get hobbies
+	print "Enter student hobby/hobbies: "
+	hobby = STDIN.gets.chomp
+	# get current location
+	print "Enter country of current residence: "
+	residence = STDIN.gets.chomp
+	# height
+	print "Enter height: "
+	height = STDIN.gets.chomp
+end
+
+
 
 # created input students method
 def input_students
     puts "To finish, just hit return twice"
-    # create an empty array
-    # students = []
     # get the first name
     print "Enter student name: "
     name = STDIN.gets.strip
-    # get the cohort name
-    # print "Enter cohort name: "
-    # cohort = STDIN.gets.strip
-    # # get hobbies
-    # print "Enter student hobby/hobbies: "
-    # hobby = STDIN.gets.chomp
-    # # get current location
-    # print "Enter country of current residence: "
-    # residence = STDIN.gets.chomp
-    # # height
-    # print "Enter height: "
-    # height = STDIN.gets.chomp
+    
     # while the name is not empty, repeat this code
     while !name.empty? do
       # add the student hash to the array
@@ -54,18 +57,6 @@ def input_students
       # get info from the user for other student
       print "Enter student name: "
       name = STDIN.gets.chomp
-      # get the cohort name
-      # print "Enter cohort name: "
-      # cohort = STDIN.gets.chomp
-      # # get hobbies
-      # print "Enter student hobby/hobbies: "
-      # hobby = STDIN.gets.chomp
-      # # get current location
-      # print "Enter country of current residence: "
-      # residence = STDIN.gets.chomp
-      # # height
-      # print "Enter height: "
-      # height = STDIN.gets.chomp
     end
     # return the array of students
       return @students
@@ -244,4 +235,5 @@ def interactive_menu
   end
 end
 
+try_load_students
 interactive_menu
