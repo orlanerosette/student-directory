@@ -64,7 +64,7 @@ def input_students
       height = gets.chomp
     end
     # return the array of students
-    return students
+      return students
   end
 
 
@@ -138,7 +138,11 @@ end
 
 # created print names method
 def print_students(students)
-  students.each { |student| puts "#{student[:name]} (#{student[:cohort]} cohort)".center(50) }
+    if students.count > 0
+        students.each { |student| puts "#{student[:name]} (#{student[:cohort]} cohort)".center(50) }
+    else
+      puts "There are no students."
+    end
 end
 
 
