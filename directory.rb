@@ -131,8 +131,8 @@ end
 
 # created print header method
 def print_header
-  puts "The students of Villains Academy"
-  puts "----------------"
+  puts "The students of Villains Academy".center(50)
+  puts "----------------".center(50)
 end
 
 
@@ -152,9 +152,34 @@ def print_footer(names)
 end
 
 
-# calling the methods
-students = input_students
-# print_header
-# print_students_less_than_12_char(students)
-# print_footer(students)
-print_students(students)
+# created interactive menu
+def interactive_menu
+  students = []
+  loop do
+    # print the menu and ask the user what to do
+    puts "1. Input the students"
+    puts "2. Show the students"
+    puts "9. To exit"
+
+    # read the input and save it as a variable
+    selection = gets.chomp
+    case selection
+      when "1"
+        # input students
+        students = input_students
+      when "2"
+        # show the students
+        print_header
+        print_students(students)
+        print_footer(students)
+      when "9"
+        # this will terminate the program
+        exit
+      else
+        puts "I don't know what you meant, try again"
+    end
+
+  end
+end
+
+interactive_menu
